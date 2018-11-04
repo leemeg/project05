@@ -41,6 +41,7 @@ transStats[OTHER] = [0,0,0,0,0,"Other"];
 
 function main() {
     transGenorator();//generates data for prog testing, would not be in actual prog
+    console.log(`\x1Bc`);
     while (rerun === 0) {//continuous loop
         setaction();
     }
@@ -52,7 +53,7 @@ function settransInfo(){
     const  GMAX = 6;
     const PMIN = 0;
     const PMAX = 15.00;
-    console.log(`Please enter value for the genre of purchase.`);
+    console.log(`\nPlease enter value for the genre of purchase.`);
     console.log(`[1] ${transStats[CLASSICAL][GENRE_STRING]}`);
     console.log(`[2] ${transStats[EASY_LISTEN][GENRE_STRING]}`);
     console.log(`[3] ${transStats[JAZZ][GENRE_STRING]}`);
@@ -173,7 +174,7 @@ function sortTransOrder() {
             }
         }
     }
-    console.log(`Total Purchases        Genre`);
+    console.log(`\nTotal Purchases        Genre`);
     console.log(`---------------     -----------`);
     for (let i = 0; i < reorderStats.length; i++) {
         console.log(`      ${reorderStats[i][TOTAL_PURCH]}           ${reorderStats[i][GENRE_STRING]}`);
@@ -181,7 +182,7 @@ function sortTransOrder() {
 }
 
 function dispStatsReport() {
-    console.log(`    Genre        Over $10    $6.00-$9.99   $3.00-$5.99   Under $3.00`);
+    console.log(`\n    Genre        Over $10    $6.00-$9.99   $3.00-$5.99   Under $3.00`);
     console.log(`-------------    --------    -----------   -----------   -----------`);
     console.log(`  ${transStats[CLASSICAL][GENRE_STRING]}         ${transStats[CLASSICAL][OVER_TEN]}            ${transStats[CLASSICAL][OVER_SIX]}            ${transStats[CLASSICAL][OVER_THREE]}           ${transStats[CLASSICAL][UNDER_THREE]}`);
     console.log(`${transStats[EASY_LISTEN][GENRE_STRING]}      ${transStats[EASY_LISTEN][OVER_TEN]}            ${transStats[EASY_LISTEN][OVER_SIX]}            ${transStats[EASY_LISTEN][OVER_THREE]}           ${transStats[EASY_LISTEN][UNDER_THREE]}`);
@@ -195,6 +196,7 @@ function setaction() {
     const MIN = 1;
     const MAX = 4;
     let action;
+    console.log(`\nWhat would you like to do?`);
     console.log(`[1] Enter new transaction.`);
     console.log(`[2] View full download stats.`);
     console.log(`[3] View order of most downloaded.`);
