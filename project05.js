@@ -8,9 +8,6 @@
 "use strict";
 const PROMPT = require('readline-sync');
 
-
-
-
 const CLASSICAL = 0;
 const EASY_LISTEN = 1;
 const JAZZ = 2;
@@ -27,6 +24,7 @@ const UNDER_THREE = 4;
 const GENRE_STRING = 5;
 
 let tempGenre, price;
+let rerun = 0;//presets for auto rerun
 
 let transaction = [];
 transaction[GENRE] = [];
@@ -43,11 +41,8 @@ transStats[OTHER] = [0,0,0,0,0,"Other"];
 
 function main() {
     transGenorator();//generates data for prog testing, would not be in actual prog
-    while (0 === 0) {//continuous loop
-        settransInfo();
-
-        sortTransOrder();
-        dispStatsReport();
+    while (rerun === 0) {//continuous loop
+        setaction();
     }
 }
 main();
@@ -167,7 +162,7 @@ function sortPrice(tempGenre, i) {
 }
 
 function sortTransOrder() {
-    let reorderStats = transStats;
+    let reorderStats = transStats.slice(0);//https://https://www.w3schools.com/js/js_array_methods.asp
     let unsort = reorderStats.length;
     for (let y = 0; y < unsort; y++) {
         for (let x = 0; x < unsort; x++){
@@ -177,9 +172,12 @@ function sortTransOrder() {
                 reorderStats[x] = temp;
             }
         }
-
     }
-    console.log(reorderStats);
+    console.log(`Total Purchases        Genre`);
+    console.log(`---------------     -----------`);
+    for (let i = 0; i < reorderStats.length; i++) {
+        console.log(`      ${reorderStats[i][TOTAL_PURCH]}           ${reorderStats[i][GENRE_STRING]}`);
+    }
 }
 
 function dispStatsReport() {
@@ -191,4 +189,34 @@ function dispStatsReport() {
     console.log(`     ${transStats[POP][GENRE_STRING]}            ${transStats[POP][OVER_TEN]}            ${transStats[POP][OVER_SIX]}            ${transStats[POP][OVER_THREE]}           ${transStats[POP][UNDER_THREE]}`);
     console.log(`     ${transStats[ROCK][GENRE_STRING]}           ${transStats[ROCK][OVER_TEN]}            ${transStats[ROCK][OVER_SIX]}            ${transStats[ROCK][OVER_THREE]}           ${transStats[ROCK][UNDER_THREE]}`);
     console.log(`     ${transStats[OTHER][GENRE_STRING]}          ${transStats[OTHER][OVER_TEN]}            ${transStats[OTHER][OVER_SIX]}            ${transStats[OTHER][OVER_THREE]}           ${transStats[OTHER][UNDER_THREE]}`);
+}
+
+function setaction() {
+    const MIN = 1;
+    const MAX = 4;
+    let action;
+    console.log(`[1] Enter new transaction.`);
+    console.log(`[2] View full download stats.`);
+    console.log(`[3] View order of most downloaded.`);
+    console.log(`[4] Quit`);
+    while (action === null || action < MIN || action > MAX || !/[0-9]/.test(action)){
+        action = Number(PROMPT.question(`Please enter appropriate value: `));
+        if (action === null || action < MIN || action > MAX || !/[0-9]/.test(action)){
+            console.log(`${action} is not valid, Please enter appropriate value.`);
+        }
+    }switch (action) {
+        case 1:
+            settransInfo();
+            break;
+        case 2:
+            dispStatsReport();
+            break;
+        case 3:
+            sortTransOrder();
+            break;
+        default:
+            rerun = 1;
+            break;
+
+    }
 }
